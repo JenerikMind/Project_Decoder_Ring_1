@@ -7,15 +7,28 @@ const polybiusModule = (function() {
     // you can add any code you want within this function scope
 
     function polybius(input, encode = true) {
-        const cleanedInput = input.trim().toLowerCase();
-        const inputArr = cleanedInput.split(' ');
-        let codedMsgArr = [];
+        // trim whitespace, make lower case and split into an array
+        // to feed into a helper function
+        const inputArr = input.trim().toLowerCase().split(' ');
 
-        for (let word in inputArr) {
-            codedMsgArr.push(encodeWord(inputArr[word]));
+        // init some variables to contain processed data
+        let codedMsgArr = [];
+        let completeMsg = "";
+
+        if (encode) {
+            // encode the message
+            for (let word in inputArr) {
+                codedMsgArr.push(encodeWord(inputArr[word]));
+            }
+            completeMsg = codedMsgArr.join(' ');
+        } else {
+            // decode the message
+            for (let word in inputArr) {
+                codedMsgArr.push(decodeMessage(inputArr[word]));
+            }
+            completeMsg = codedMsgArr.join(' ');
         }
 
-        const completeMsg = codedMsgArr.join(' ');
         return completeMsg;
     }
 
@@ -60,9 +73,10 @@ const polybiusModule = (function() {
 
             for (let row in polybiusSq) {
                 if ((polybiusSq[row].find(char => char === findChar)) !== undefined) {
-                    const index = polybiusSq[row].indexOf(findChar) + 1;
+                    const index = polybiusSq[row].indexOf(findChar);
+                    // both values +1 because a polybius sq doesn't start from 0
                     // col index
-                    code += index;
+                    code += index + 1;
                     // row index
                     code += parseInt(row) + 1;
                 };
@@ -72,11 +86,28 @@ const polybiusModule = (function() {
         return code;
     }
 
+    function decodeMessage(code) {
+        const polySq = createSquare();
+        // loop through the code, each letter should be mapped
+        // to 2 ints so i+2 would be appropriate
+        let col = 0;
+        let row = 0;
+        let decodedMsg = "";
+
+        for (let i = 0; i < code.length; i += 2) {
+            // col and row -1 because arrays begin from 0
+            col = parseInt(code[i]) - 1;
+            row = parseInt(code[i + 1]) - 1;
+            decodedMsg += polySq[row][col];
+        }
+
+        return decodedMsg;
+    }
+
     return {
         polybius,
     };
 })();
 
-polybiusModule.polybius('test');
 
 module.exports = { polybius: polybiusModule.polybius };

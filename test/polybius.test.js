@@ -49,4 +49,16 @@ describe("Polybius square", () => {
         actual = polybius('A Message');
         expect(actual).to.equal(expected);
     });
+
+    it("should decode 42 as i/j", () => {
+        expected = 'i/j';
+        actual = polybius("42", false);
+        expect(actual).to.equal(expected);
+    });
+
+    it("should decode '11 23513434112251' as 'a message'", () => {
+        expected = "a message";
+        actual = polybius('11 23513434112251', false);
+        expect(actual).to.equal(expected);
+    });
 });
