@@ -7,6 +7,9 @@ const substitutionModule = (function() {
     // you can add any code you want within this function scope
 
     function substitution(input, alphabet, encode = true) {
+        // if alphabet missing, return false
+        if (!alphabet) return false;
+
         // check to see if given key is a proper length
         if (alphabet.length != 26) return false;
 
