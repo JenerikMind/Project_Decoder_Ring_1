@@ -61,4 +61,9 @@ describe("Polybius square", () => {
         actual = polybius('11 23513434112251', false);
         expect(actual).to.equal(expected);
     });
+
+    it("should return false if bad decoder input", () => {
+        actual = polybius('111', false);
+        expect(actual).to.be.false;
+    });
 });

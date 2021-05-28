@@ -25,8 +25,6 @@ const polybiusModule = (function() {
                 codedMsgArr.push(encodeWord(inputArr[word]));
             }
         } else {
-            // if # of num submitted is odd, return false (bad input)
-            if (input.length % 2 != 0) return false;
             // decode the message
             for (let word in inputArr) {
                 codedMsgArr.push(decodeMessage(inputArr[word]));
