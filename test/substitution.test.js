@@ -29,4 +29,10 @@ describe("substitution", () => {
         const actual = subs('A message', 'plmoknijbuhvygctfxrdzeswaq');
         expect(actual).to.equal(expected);
     });
+
+    it("should be able to decode a given message", () => {
+        const expected = 'a message';
+        const actual = subs('p ykrrpik', 'plmoknijbuhvygctfxrdzeswaq', false);
+        expect(actual).to.equal(expected);
+    });
 });

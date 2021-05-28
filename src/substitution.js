@@ -14,7 +14,12 @@ const substitutionModule = (function() {
         if (duplicates(alphabet)) return false;
 
         // create the cipher to encode / decode
-        const cipher = createCipher(alphabet);
+        let cipher = {};
+        if (encode) {
+            cipher = createEncryptionCipher(alphabet);
+        } else {
+            cipher = createDecryptionCipher(alphabet);
+        }
 
         // encode a message
         const cleanedInput = input.trim().toLowerCase().split(' ');
@@ -29,12 +34,22 @@ const substitutionModule = (function() {
         return messageArr.join(' ');
     }
 
-    function createCipher(givenAlphabet) {
+    function createEncryptionCipher(givenAlphabet) {
         let alphabet = 'z,y,x,w,v,u,t,s,r,q,p,o,n,m,l,k,i,j,h,g,f,e,d,c,b,a'.split(',');
         let cipher = {};
 
         for (let i = 0; i < givenAlphabet.length; i++) {
             cipher[alphabet.pop()] = givenAlphabet[i];
+        }
+
+        return cipher;
+    }
+
+    function createDecryptionCipher(givenAlphabet) {
+        let alphabet = 'z,y,x,w,v,u,t,s,r,q,p,o,n,m,l,k,i,j,h,g,f,e,d,c,b,a'.split(',');
+        let cipher = {};
+        for (let char in givenAlphabet) {
+            cipher[givenAlphabet[char]] = alphabet.pop();
         }
 
         return cipher;
@@ -65,6 +80,7 @@ const substitutionModule = (function() {
     return {
         substitution,
     };
+
 })();
 
 substitutionModule.substitution('abc', 'llmoknijbuhvygctfxrdzeswaq');
