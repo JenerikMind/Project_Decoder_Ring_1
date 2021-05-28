@@ -7,6 +7,10 @@ const polybiusModule = (function() {
     // you can add any code you want within this function scope
 
     function polybius(input, encode = true) {
+        // if # of num submitted is odd, return false (bad input)
+        const inputLenCheck = input.replace(' ', '').length;
+        if (!encode && inputLenCheck % 2 != 0) return false;
+
         // trim whitespace, make lower case and split into an array
         // to feed into a helper function
         const inputArr = input.trim().toLowerCase().split(' ');
@@ -20,15 +24,17 @@ const polybiusModule = (function() {
             for (let word in inputArr) {
                 codedMsgArr.push(encodeWord(inputArr[word]));
             }
-            completeMsg = codedMsgArr.join(' ');
         } else {
+            // if # of num submitted is odd, return false (bad input)
+            if (input.length % 2 != 0) return false;
             // decode the message
             for (let word in inputArr) {
                 codedMsgArr.push(decodeMessage(inputArr[word]));
             }
-            completeMsg = codedMsgArr.join(' ');
         }
 
+        // complete the string and maintain any spaces
+        completeMsg = codedMsgArr.join(' ');
         return completeMsg;
     }
 
