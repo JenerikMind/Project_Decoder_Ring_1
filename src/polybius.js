@@ -15,9 +15,8 @@ const polybiusModule = (function() {
         // to feed into a helper function
         const inputArr = input.trim().toLowerCase().split(' ');
 
-        // init some variables to contain processed data
+        // init an array to contain coded/decoded words
         let codedMsgArr = [];
-        let completeMsg = "";
 
         if (encode) {
             // encode the message
@@ -32,8 +31,7 @@ const polybiusModule = (function() {
         }
 
         // complete the string and maintain any spaces
-        completeMsg = codedMsgArr.join(' ');
-        return completeMsg;
+        return codedMsgArr.join(' ');
     }
 
     function createSquare() {
